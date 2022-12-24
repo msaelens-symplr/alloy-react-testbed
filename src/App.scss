@@ -7,4 +7,25 @@ form {
   p {
     font-size: $font-size-md;
   }
+
+  sympl-check-box {
+    display: inline-block;
+  }
+
+  .checkbox-badge {
+    display: block;
+    clear: both;
+    padding: 0.125rem 0;
+  }
+
+  sympl-text-badge {
+    margin-left: 1em;
+    display: inline;
+    float: right;
+
+    .badge-icon {
+      width: 0;
+      visibility: collapse;
+    }
+  }
 }
