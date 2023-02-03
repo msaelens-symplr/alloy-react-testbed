@@ -21,33 +21,46 @@ import {
     SymplPaginator,
     SymplTab,
     SymplTabs,
-    SymplQuickMenu,
     SymplAccountMenu,
-    SymplToolsMenu,
     SymplMenu,
     SymplDropdown,
     SymplLabel,
     SymplInput,
     SymplCardContent,
-    SymplCallout,
-    SymplPanel,
-    SymplIconButton,
     SymplPrimaryButton,
     SymplSecondaryButton,
-    SymplButtonBar,
-    SymplDatepicker
+    SymplDatepicker,
+    SymplModal,
+    SymplMenuSegment,
+    SymplUtilityBar,
+    SymplBreadcrumb
 } from "@symplr-ux/alloy-components/dist/react-bindings";
 import { ISymplMenuItem } from "@symplr-ux/alloy-components/dist/types/model/SymplMenuItem.model";
-import { ISymplDropdownOption, ISymplRadioGroupOption } from "@symplr-ux/alloy-components/dist/types/model";
+import {
+    ISymplBreadcrumbItem,
+    ISymplDropdownOption,
+    ISymplRadioGroupOption
+} from "@symplr-ux/alloy-components/dist/types/model";
 
 function App() {
-    const menuItems: ISymplMenuItem[] = [
-        { key: "open", text: "Open" },
-        { key: "edit", text: "Edit" },
-        { key: "share", text: "Share" },
-        { key: "guess", text: "Guess" }
+    const learnerMenuItems: ISymplMenuItem[] = [
+        { key: "Learners", text: "Learners" },
+        { key: "AdminUsers", text: "Admin Users" },
+        { key: "Whatever0", text: "Whatever" },
+        { key: "Whatever1", text: "Whatever" },
+        { key: "Whatever2", text: "Whatever" },
+        { key: "Whatever3", text: "Whatever" },
+        { key: "JobTitles", text: "JobTitles" }
     ];
 
+    const menuItems: ISymplMenuItem[] = [
+        { key: "learners", text: "Learners", subMenuProps: learnerMenuItems },
+        { key: "elearning", text: "eLearning" },
+        { key: "classroom", text: "Classroom" },
+        { key: "competency", text: "Competency" },
+        { key: "reports", text: "Reports" },
+        { key: "utilities", text: "Utilities" }
+    ];
     const dropDownOptions: ISymplDropdownOption[] = [
         { key: "open", text: "Open" },
         { key: "edit", text: "Edit" },
@@ -62,17 +75,26 @@ function App() {
         { key: "guess", text: "Guess" }
     ];
 
+    const breadCrumbs: ISymplBreadcrumbItem[] = [
+        { key: "localhost", text: "localhost" },
+        { key: "pearners", text: "Learners" },
+        { key: "people", text: "People" }
+    ];
+
     return (
         <>
             <SymplHeader logo='/alloy-react-testbed/assets/small-symplr-logo.svg' environment='DEV'>
-                <SymplMenu items={menuItems} />
+                <SymplMenu slot='menu' items={menuItems}></SymplMenu>
+                <SymplUtilityBar slot='menu' showContextSwitcher showUtilities showOnlineHelp></SymplUtilityBar>
+                <SymplAccountMenu slot='menu' name='superadmin' />
             </SymplHeader>
+            <SymplBreadcrumb items={breadCrumbs}></SymplBreadcrumb>
             <form>
                 <SymplStepper activeIndex={0}>
                     <SymplStep name='Controls with Icons'>
                         <SymplAccordion header='Accordian'>
                             <SymplAccordionItem header='Buttons'>
-                                <SymplPrimaryButton text='Search' icon='si-search'></SymplPrimaryButton>
+                                <SymplPrimaryButton text='Search (disabled)' disabled icon='si-search'></SymplPrimaryButton>
                                 &nbsp;
                                 <SymplSecondaryButton text='Refresh' icon='si-refresh-cw'></SymplSecondaryButton>
                                 &nbsp;
@@ -86,6 +108,19 @@ function App() {
                         </SymplAccordion>
                     </SymplStep>
                     <SymplStep name='Small Controls' icon='si-search'>
+                        <div>
+                            <SymplModal id='modal' header='Header' header-icon='si-shield' visible={true}>
+                                <div slot='content'>
+                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+                                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+                                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                </div>
+                                <div slot='footer'>Footer</div>
+                            </SymplModal>
+                            <SymplPrimaryButton text='Open Modal'></SymplPrimaryButton>
+                        </div>
                         <SymplCard>
                             <SymplCardHeader>Datepickers</SymplCardHeader>
                             <SymplDatepicker label='Date Picker' required></SymplDatepicker>
@@ -171,7 +206,7 @@ function App() {
                         </SymplTabs>
                     </SymplStep>
                     <SymplStep name='Pagination' icon='si-palmtree'>
-                        <SymplPaginator total={100} compact></SymplPaginator>
+                        <SymplPaginator total={100} showSizeChanger showTotal></SymplPaginator>
                     </SymplStep>
                     <SymplStep name='Filters' icon='si-credit-card'>
                         <SymplCard>
@@ -244,7 +279,9 @@ function App() {
                             </SymplDgHead>
                             <SymplDgBody slot='body'>
                                 <SymplDgRow>
-                                    <SymplDgCell>Intro to SQL</SymplDgCell>
+                                    <SymplDgCell>
+                                        <a>Intro to SQL</a>
+                                    </SymplDgCell>
                                     <SymplDgCell>#2</SymplDgCell>
                                     <SymplDgCell>301</SymplDgCell>
                                     <SymplDgCell></SymplDgCell>
@@ -263,7 +300,9 @@ function App() {
                                     <SymplDgCell></SymplDgCell>
                                 </SymplDgRow>
                                 <SymplDgRow>
-                                    <SymplDgCell>Intermediate SQL</SymplDgCell>
+                                    <SymplDgCell>
+                                        <a>Intermediate SQL</a>
+                                    </SymplDgCell>
                                     <SymplDgCell>#2</SymplDgCell>
                                     <SymplDgCell>10B</SymplDgCell>
                                     <SymplDgCell></SymplDgCell>
@@ -285,6 +324,120 @@ function App() {
                                     <SymplDgCell>Advanced SQL</SymplDgCell>
                                     <SymplDgCell>#2</SymplDgCell>
                                     <SymplDgCell>22-b</SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                </SymplDgRow>
+                                <SymplDgRow>
+                                    <SymplDgCell>Intro to graphQL</SymplDgCell>
+                                    <SymplDgCell>#2</SymplDgCell>
+                                    <SymplDgCell>18</SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                </SymplDgRow>
+                                <SymplDgRow>
+                                    <SymplDgCell>Intro to graphQL</SymplDgCell>
+                                    <SymplDgCell>#2</SymplDgCell>
+                                    <SymplDgCell>18</SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                </SymplDgRow>
+                                <SymplDgRow>
+                                    <SymplDgCell>Intro to graphQL</SymplDgCell>
+                                    <SymplDgCell>#2</SymplDgCell>
+                                    <SymplDgCell>18</SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                </SymplDgRow>
+                                <SymplDgRow>
+                                    <SymplDgCell>Intro to graphQL</SymplDgCell>
+                                    <SymplDgCell>#2</SymplDgCell>
+                                    <SymplDgCell>18</SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                </SymplDgRow>
+                                <SymplDgRow>
+                                    <SymplDgCell>Intro to graphQL</SymplDgCell>
+                                    <SymplDgCell>#2</SymplDgCell>
+                                    <SymplDgCell>18</SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                    <SymplDgCell></SymplDgCell>
+                                </SymplDgRow>
+                                <SymplDgRow>
+                                    <SymplDgCell>Intro to graphQL</SymplDgCell>
+                                    <SymplDgCell>#2</SymplDgCell>
+                                    <SymplDgCell>18</SymplDgCell>
                                     <SymplDgCell></SymplDgCell>
                                     <SymplDgCell></SymplDgCell>
                                     <SymplDgCell></SymplDgCell>
