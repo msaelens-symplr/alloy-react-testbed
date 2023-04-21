@@ -31,9 +31,9 @@ import {
     SymplSecondaryButton,
     SymplDatepicker,
     SymplModal,
-    SymplMenuSegment,
     SymplUtilityBar,
-    SymplBreadcrumb
+    SymplBreadcrumb,
+    SymplTertiaryButton
 } from "@symplr-ux/alloy-components/dist/react-bindings";
 import { ISymplMenuItem } from "@symplr-ux/alloy-components/dist/types/model/SymplMenuItem.model";
 import {
@@ -86,7 +86,7 @@ function App() {
             <SymplHeader logo='/alloy-react-testbed/assets/small-symplr-logo.svg' environment='DEV'>
                 <SymplMenu slot='menu' items={menuItems}></SymplMenu>
                 <SymplUtilityBar slot='menu' showContextSwitcher showUtilities showOnlineHelp></SymplUtilityBar>
-                <SymplAccountMenu slot='menu' name='superadmin' />
+                <SymplAccountMenu slot='menu' name='über admin' />
             </SymplHeader>
             <SymplBreadcrumb items={breadCrumbs}></SymplBreadcrumb>
             <form>
@@ -96,7 +96,7 @@ function App() {
                             <SymplAccordionItem header='Buttons'>
                                 <SymplPrimaryButton text='Search (disabled)' disabled icon='si-search'></SymplPrimaryButton>
                                 &nbsp;
-                                <SymplSecondaryButton text='Refresh' icon='si-refresh-cw'></SymplSecondaryButton>
+                                <SymplPrimaryButton text='Refresh' icon='si-refresh-cw'></SymplPrimaryButton>
                                 &nbsp;
                                 <SymplSecondaryButton text='Add Person' icon='si-user-plus'></SymplSecondaryButton>
                                 &nbsp;
@@ -104,8 +104,20 @@ function App() {
                                 &nbsp;
                                 <SymplSecondaryButton text='Folder' icon='si-folder-plus'></SymplSecondaryButton>
                                 &nbsp;
+                                <SymplTertiaryButton text='Tertiary Button' icon='si-folder-plus'></SymplTertiaryButton>
+                                &nbsp;
+                                <SymplTertiaryButton text='Close' icon='si-x'></SymplTertiaryButton>
+                                &nbsp;
                             </SymplAccordionItem>
                         </SymplAccordion>
+                    </SymplStep>
+                    <SymplStep name='Headers'>
+                        <h1>H1</h1>
+                        <h2>H2</h2>
+                        <h3>H3</h3>
+                        <h4>H4</h4>
+                        <h5>H5</h5>
+                        <h6>H6</h6>
                     </SymplStep>
                     <SymplStep name='Small Controls' icon='si-search'>
                         <div>
@@ -255,7 +267,7 @@ function App() {
                         </SymplCard>
                     </SymplStep>
                     <SymplStep name='Grid' icon='si-verified'>
-                        <SymplDataGrid title='Instructor-Led Classes' infinite maxHeight='300px'>
+                        <SymplDataGrid title='Instructor-Led Classes' selectionMode='single' maxHeight='300px'>
                             <SymplDgHead sticky={true} slot='header'>
                                 <SymplDgRow>
                                     <SymplDgHeaderCell>Class Title</SymplDgHeaderCell>
