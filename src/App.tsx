@@ -67,6 +67,16 @@ function App() {
         { key: "share", text: "Share" },
         { key: "guess", text: "Guess" }
     ];
+    const openCourseOptions: ISymplRadioGroupOption[] = [
+        { key: "sameTab", text: "Same Browser Tab" },
+        { key: "newTab", text: "New Browser Tab" }
+    ];
+    const compatabilityModes: ISymplDropdownOption[] = [
+        { key: "none", text: "None" },
+        { key: "ie7", text: "Emulate IE7" },
+        { key: "ie8", text: "Emulate IE8" },
+        { key: "ie9", text: "Emulate IE9" }
+    ];
 
     const radioGroupOptions: ISymplRadioGroupOption[] = [
         { key: "open", text: "Open" },
@@ -81,6 +91,10 @@ function App() {
         { key: "people", text: "People" }
     ];
 
+    let date1 = new Date();
+    let date2 = new Date("08/07/1987");
+    let invalidDate = new Date("22/28/2023");
+
     return (
         <>
             <SymplHeader logo='/alloy-react-testbed/assets/small-symplr-logo.svg' environment='DEV'>
@@ -91,6 +105,52 @@ function App() {
             <SymplBreadcrumb items={breadCrumbs}></SymplBreadcrumb>
             <form>
                 <SymplStepper activeIndex={0}>
+                    <SymplStep name='Date Pickers' icon='si-calendar'>
+                        <SymplCard>
+                            <SymplCardHeader>Datepickers</SymplCardHeader>
+                            <SymplDatepicker
+                                label='Date Picker'
+                                value={date1}
+                                required
+                                show-clear
+                                onDateSelected={(e) => {
+                                    console.log(`First date selected: ${e.detail}`);
+                                }}
+                                onSymplvalue={(e) => console.log(`First date value change: ${e.detail}`)}></SymplDatepicker>
+                            <SymplDatepicker
+                                label='Invalid Date'
+                                value={invalidDate}
+                                showClear
+                                onDateSelected={(e) => {
+                                    console.log(`Second date selected: ${e.detail}`);
+                                }}
+                                onSymplvalue={(e) => console.log(`Second date value change: ${e.detail}`)}></SymplDatepicker>
+                        </SymplCard>
+                    </SymplStep>
+                    <SymplStep name='Course Settings'>
+                        <h5>Edit Course: Viking Lifting Overview CBL</h5>
+                        <div className='sympl-grid'>
+                            <div className='sympl-col-3'>
+                                <SymplCard>
+                                    <SymplCardActionLink>Course Info</SymplCardActionLink>
+                                    <SymplCardActionLink>Credit Types</SymplCardActionLink>
+                                    <SymplCardActionLink>
+                                        <b>Course Settings</b>
+                                    </SymplCardActionLink>
+                                </SymplCard>
+                            </div>
+                            <div className='sympl-col-9'>
+                                <SymplCard>
+                                    <h6>Course Settings</h6>
+                                    <SymplRadioGroup label='Open Course In' options={openCourseOptions}></SymplRadioGroup>
+                                    <SymplDropdown
+                                        value={compatabilityModes[0].key}
+                                        label='Compatability Mode'
+                                        options={compatabilityModes}></SymplDropdown>
+                                </SymplCard>
+                            </div>
+                        </div>
+                    </SymplStep>
                     <SymplStep name='Controls with Icons'>
                         <SymplAccordion header='Accordian'>
                             <SymplAccordionItem header='Buttons'>
@@ -120,24 +180,6 @@ function App() {
                         <h6>H6</h6>
                     </SymplStep>
                     <SymplStep name='Small Controls' icon='si-search'>
-                        <div>
-                            <SymplModal id='modal' header='Header' header-icon='si-shield' visible={true}>
-                                <div slot='content'>
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                                    labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-                                    voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-                                    cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                </div>
-                                <div slot='footer'>Footer</div>
-                            </SymplModal>
-                            <SymplPrimaryButton text='Open Modal'></SymplPrimaryButton>
-                        </div>
-                        <SymplCard>
-                            <SymplCardHeader>Datepickers</SymplCardHeader>
-                            <SymplDatepicker label='Date Picker' required></SymplDatepicker>
-                            <SymplDatepicker label='Date Picker' required></SymplDatepicker>
-                        </SymplCard>
                         <SymplCard>
                             <SymplCardHeader>Dropdowns</SymplCardHeader>
                             <SymplDropdown
@@ -217,9 +259,6 @@ function App() {
                             <SymplTab name='Courses'></SymplTab>
                         </SymplTabs>
                     </SymplStep>
-                    <SymplStep name='Pagination' icon='si-palmtree'>
-                        <SymplPaginator total={100} showSizeChanger showTotal></SymplPaginator>
-                    </SymplStep>
                     <SymplStep name='Filters' icon='si-credit-card'>
                         <SymplCard>
                             <SymplCardHeader>
@@ -292,7 +331,7 @@ function App() {
                             <SymplDgBody slot='body'>
                                 <SymplDgRow>
                                     <SymplDgCell>
-                                        <a>Intro to SQL</a>
+                                        <a href='#'>Intro to SQL</a>
                                     </SymplDgCell>
                                     <SymplDgCell>#2</SymplDgCell>
                                     <SymplDgCell>301</SymplDgCell>
@@ -313,7 +352,7 @@ function App() {
                                 </SymplDgRow>
                                 <SymplDgRow>
                                     <SymplDgCell>
-                                        <a>Intermediate SQL</a>
+                                        <a href='#'>Intermediate SQL</a>
                                     </SymplDgCell>
                                     <SymplDgCell>#2</SymplDgCell>
                                     <SymplDgCell>10B</SymplDgCell>
@@ -489,7 +528,11 @@ function App() {
                                 <div></div>
                             </SymplDgFoot>
                         </SymplDataGrid>
-                        <h4>Summary</h4>
+                        <div className='my-1'>
+                            <SymplPaginator total={100} showSizeChanger showTotal></SymplPaginator>
+                        </div>
+                        <SymplLabel text='Compact'></SymplLabel>
+                        <SymplPaginator total={100} showTotal compact></SymplPaginator>
                     </SymplStep>
                 </SymplStepper>
             </form>
