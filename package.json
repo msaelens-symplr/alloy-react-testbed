@@ -4,10 +4,7 @@
   "private": true,
   "homepage": "https://msaelens-symplr.github.io/alloy-react-testbed",
   "dependencies": {
-    "@symplr-ux/alloy": "^1.20.0",
-    "@symplr-ux/alloy-components": "^1.20.0",
-    "@symplr-ux/alloy-icons": "^1.20.0",
-    "@symplr-ux/alloy-theme": "^1.20.0",
+    "@symplr-ux/alloy": "^1.26.0",
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
