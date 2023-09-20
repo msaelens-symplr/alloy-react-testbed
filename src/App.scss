@@ -29,3 +29,23 @@ form {
     }
   }
 }
+
+sympl-dg-cell {
+  &.error-cell {
+    td {
+      background-color: var(--alloy-alias-color-status-critical-subtle);
+
+      i {
+        &::before {
+          background-color: var(--alloy-alias-color-status-critical-strong);
+        }
+        float: right;
+      }
+    }
+  }
+}
+
+sympl-utility-bar {
+  position: relative;
+  top: 8px;
+}

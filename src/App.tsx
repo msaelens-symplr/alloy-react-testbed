@@ -8,7 +8,6 @@ import {
     SymplDgHeaderCell,
     SymplDgCell,
     SymplDgBody,
-    SymplDgFoot,
     SymplCard,
     SymplCheckBox,
     SymplCardHeader,
@@ -30,10 +29,12 @@ import {
     SymplPrimaryButton,
     SymplSecondaryButton,
     SymplDatepicker,
-    SymplModal,
     SymplUtilityBar,
     SymplBreadcrumb,
-    SymplTertiaryButton
+    SymplTertiaryButton,
+    SymplSearchBox,
+    SymplSearchBar,
+    SymplFooter
 } from "@symplr-ux/alloy-components/dist/react-bindings";
 import { ISymplMenuItem } from "@symplr-ux/alloy-components/dist/types/model/SymplMenuItem.model";
 import {
@@ -41,6 +42,7 @@ import {
     ISymplDropdownOption,
     ISymplRadioGroupOption
 } from "@symplr-ux/alloy-components/dist/types/model";
+import { SymplUtilityBarCustomEvent } from "@symplr-ux/alloy-components/dist/types/components";
 
 function App() {
     const learnerMenuItems: ISymplMenuItem[] = [
@@ -87,47 +89,41 @@ function App() {
 
     const breadCrumbs: ISymplBreadcrumbItem[] = [
         { key: "localhost", text: "localhost" },
-        { key: "pearners", text: "Learners" },
+        { key: "learners", text: "Learners" },
         { key: "people", text: "People" }
     ];
-
-    let date1 = new Date();
-    let date2 = new Date("08/07/1987");
-    let invalidDate = new Date("22/28/2023");
 
     return (
         <>
             <SymplHeader logo='/alloy-react-testbed/assets/small-symplr-logo.svg' environment='DEV'>
                 <SymplMenu slot='menu' items={menuItems}></SymplMenu>
-                <SymplUtilityBar slot='menu' showContextSwitcher showUtilities showOnlineHelp></SymplUtilityBar>
-                <SymplAccountMenu slot='menu' name='über admin' />
+                <SymplUtilityBar
+                    slot='menu'
+                    showContextSwitcher
+                    showUtilities
+                    showNotifications
+                    notificationCount={2}
+                    showOnlineHelp></SymplUtilityBar>
+                <SymplAccountMenu
+                    slot='menu'
+                    src='https://d2wqxz7kk0xw8t.cloudfront.net/images/beavis.jpg'
+                    name='Beavis'
+                    showChangePassword
+                    showAbout
+                    showProfile></SymplAccountMenu>
             </SymplHeader>
             <SymplBreadcrumb items={breadCrumbs}></SymplBreadcrumb>
             <form>
                 <SymplStepper activeIndex={0}>
-                    <SymplStep name='Date Pickers' icon='si-calendar'>
-                        <SymplCard>
-                            <SymplCardHeader>Datepickers</SymplCardHeader>
-                            <SymplDatepicker
-                                label='Date Picker'
-                                value={date1}
-                                required
-                                show-clear
-                                onDateSelected={(e) => {
-                                    console.log(`First date selected: ${e.detail}`);
-                                }}
-                                onSymplvalue={(e) => console.log(`First date value change: ${e.detail}`)}></SymplDatepicker>
-                            <SymplDatepicker
-                                label='Invalid Date'
-                                value={invalidDate}
-                                showClear
-                                onDateSelected={(e) => {
-                                    console.log(`Second date selected: ${e.detail}`);
-                                }}
-                                onSymplvalue={(e) => console.log(`Second date value change: ${e.detail}`)}></SymplDatepicker>
-                        </SymplCard>
+                    <SymplStep name='Tabs' icon='si-tab'>
+                        <SymplTabs>
+                            <SymplTab name='Tab #1' title='#1'></SymplTab>
+                            <SymplTab name='Tab #2' title='#2'></SymplTab>
+                            <SymplTab name='Tab #3' title='#3'></SymplTab>
+                            <SymplTab name='Tab #4' title='#4'></SymplTab>
+                        </SymplTabs>
                     </SymplStep>
-                    <SymplStep name='Course Settings'>
+                    <SymplStep name='Course Settings' icon='si-arrow-down-narrow-wide'>
                         <h5>Edit Course: Viking Lifting Overview CBL</h5>
                         <div className='sympl-grid'>
                             <div className='sympl-col-3'>
@@ -196,6 +192,8 @@ function App() {
                             <SymplCardContent>
                                 <SymplLabel text='Required Field' required></SymplLabel>
                                 <SymplInput placeholder='placeholder'></SymplInput>
+                                <SymplLabel text='Read-Only Field' required></SymplLabel>
+                                <SymplInput readOnly value="Can't touch this"></SymplInput>
                             </SymplCardContent>
                         </SymplCard>
                         <SymplCard>
@@ -207,6 +205,14 @@ function App() {
                         <SymplCard>
                             <SymplCardHeader>Radio Group</SymplCardHeader>
                             <SymplRadioGroup label='Choose One' options={radioGroupOptions}></SymplRadioGroup>
+                        </SymplCard>
+                        <SymplCard>
+                            <SymplCardHeader>Search Box</SymplCardHeader>
+                            <SymplSearchBox></SymplSearchBox>
+                        </SymplCard>
+                        <SymplCard>
+                            <SymplCardHeader>Search Bar</SymplCardHeader>
+                            <SymplSearchBar alwaysOpen></SymplSearchBar>
                         </SymplCard>
                     </SymplStep>
                     <SymplStep name='Labels and Controls' icon='si-file'>
@@ -305,7 +311,43 @@ function App() {
                             </SymplAccordion>
                         </SymplCard>
                     </SymplStep>
-                    <SymplStep name='Grid' icon='si-verified'>
+                    <SymplStep name='Sample Grid' icon='si-verified'>
+                        <SymplDataGrid title='Sample Grid' selectionMode='single' maxHeight='300px'>
+                            <SymplDgHead sticky={true} slot='header'>
+                                <SymplDgRow>
+                                    <SymplDgHeaderCell>Class Title</SymplDgHeaderCell>
+                                    <SymplDgHeaderCell>Course Title</SymplDgHeaderCell>
+                                    <SymplDgHeaderCell>Session Title</SymplDgHeaderCell>
+                                </SymplDgRow>
+                            </SymplDgHead>
+                            <SymplDgBody slot='body'>
+                                <SymplDgRow>
+                                    <SymplDgCell>
+                                        <a href='#'>Intro to SQL</a>
+                                    </SymplDgCell>
+                                    <SymplDgCell>#2</SymplDgCell>
+                                    <SymplDgCell>301</SymplDgCell>
+                                </SymplDgRow>
+                                <SymplDgRow>
+                                    <SymplDgCell>
+                                        <a href='#'>Intro to Python</a>
+                                    </SymplDgCell>
+                                    <SymplDgCell className='error-cell'>
+                                        Invalid<i className='si-sm si-info'></i>
+                                    </SymplDgCell>
+                                    <SymplDgCell>300</SymplDgCell>
+                                </SymplDgRow>
+                                <SymplDgRow>
+                                    <SymplDgCell>
+                                        <a href='#'>Intermediate CSS</a>
+                                    </SymplDgCell>
+                                    <SymplDgCell>#2</SymplDgCell>
+                                    <SymplDgCell>301</SymplDgCell>
+                                </SymplDgRow>
+                            </SymplDgBody>
+                        </SymplDataGrid>
+                    </SymplStep>
+                    {/* <SymplStep name='Grid' icon='si-verified'>
                         <SymplDataGrid title='Instructor-Led Classes' selectionMode='single' maxHeight='300px'>
                             <SymplDgHead sticky={true} slot='header'>
                                 <SymplDgRow>
@@ -533,9 +575,10 @@ function App() {
                         </div>
                         <SymplLabel text='Compact'></SymplLabel>
                         <SymplPaginator total={100} showTotal compact></SymplPaginator>
-                    </SymplStep>
+                    </SymplStep> */}
                 </SymplStepper>
             </form>
+            <SymplFooter></SymplFooter>
         </>
     );
 }
